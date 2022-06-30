@@ -20,6 +20,11 @@ public class Apple {
         return apples.stream().filter(predicate).collect(toList());
     }
 
+    private static void parallelStream(final Collection<Apple> apples){
+
+        apples.parallelStream();
+    }
+
     private final Color color;
 
     public Apple(final Color color) {

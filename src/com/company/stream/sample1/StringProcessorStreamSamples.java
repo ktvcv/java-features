@@ -3,7 +3,6 @@ package com.company.stream.sample1;
 public class StringProcessorStreamSamples {
 
     public static void main(String[] args) {
-
         final StringProcessor toLowerCase = String::toLowerCase;
         final StringProcessor toUpperCase = String::toUpperCase;
 
