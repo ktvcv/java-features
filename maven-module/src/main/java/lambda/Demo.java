@@ -1,5 +1,8 @@
 package lambda;
 
+import com.company.jenerics.User;
+import jdk.jfr.DataAmount;
+
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.BiFunction;
@@ -9,6 +12,14 @@ import java.util.function.IntUnaryOperator;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
+
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.filtering;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 public class Demo {
 
@@ -45,6 +56,42 @@ public class Demo {
 
         System.out.println(res.applyAsInt(30));
 
+        final var filteredList = Stream.generate(() -> ThreadLocalRandom.current().nextInt())
+            .limit(20)
+            .collect(filtering(number -> number > 100, toList()));
 
+
+        final var users = asList(new User().setId(2), new User().setId(3));
+
+        final var group =  users
+            .stream()
+            .collect(groupingBy(User::getId, mapping(User::getName, toSet())));
+
+        Consumer j = System.out::println;
+
+    }
+
+
+    static class User {
+        private int id;
+        private String name;
+
+        public int getId() {
+            return id;
+        }
+
+        public User setId(final int id) {
+            this.id = id;
+            return this;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public User setName(final String name) {
+            this.name = name;
+            return this;
+        }
     }
 }
