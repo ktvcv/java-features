@@ -23,10 +23,17 @@ public class CF {
         System.out.println(res);
 
         var cf = CompletableFuture.supplyAsync(CF::getCalculatedValue)
-            .thenApply(i -> i*1.09)
+            .thenApply(i -> i * 1.09)
             .thenAccept(System.out::println);
 
         cf.join();
+
+        var intV = CompletableFuture.supplyAsync(CF::throwsException)
+            .exceptionally((ex) -> 0)
+            .thenApply(intNumber -> intNumber + 1)
+            .join();
+
+        System.out.println(intV);
 
     }
 
@@ -35,5 +42,9 @@ public class CF {
         TimeUnit.SECONDS.sleep(5);
 
         return ThreadLocalRandom.current().nextInt(100);
+    }
+
+    private static int throwsException() {
+        throw new RuntimeException();
     }
 }
